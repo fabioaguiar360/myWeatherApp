@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     height: 350,
     padding: 20,
     justifyContent: 'center',
-
   },
   spotlightText: {
     fontSize: 90,
