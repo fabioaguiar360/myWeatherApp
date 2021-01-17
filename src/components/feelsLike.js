@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import weatherApi from '../services/weatherApi';
-import SpotlightBoxes from './spotlighBoxes';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function FeelsLike( props ) {
   const [weatherData, setWeatherData] = useState([]);
@@ -31,20 +31,23 @@ export default function FeelsLike( props ) {
       <Text style={styles.text}>{weatherData.name}</Text>
       <Text style={styles.infoText}>Feels like Temperature</Text>
       <View style={styles.boxes}>
+        
         <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
-          <SpotlightBoxes
-            name={'FL'} 
-          />
+          <View style={styles.spotlightBox}>
+            <Text><Icon name="thumbs-up" size={40} color="#1F2226" /></Text>
+          </View>
         </TouchableOpacity>
+       
         <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
-          <SpotlightBoxes
-            name={'Home'} 
-          />
+          <View style={styles.spotlightBox}>
+            <Text><Icon name="thermometer-full" size={40} color="#1F2226" /></Text>
+          </View>
         </TouchableOpacity>
+       
         <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
-          <SpotlightBoxes
-            name={'Wind'} 
-          />
+          <View style={styles.spotlightBox}>
+            <Text><Icon name="wind" size={40} color="#1F2226" /></Text>
+          </View>
         </TouchableOpacity>
         
       </View>
@@ -90,4 +93,15 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row'
   },
+  spotlightBox: {
+    width: 100,
+    height: 150,
+    backgroundColor: '#F29F05',
+    fontSize: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#1F2226',
+    margin: 15,
+    borderRadius: 10
+  }
 });

@@ -2,8 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import weatherApi from '../services/weatherApi';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import SpotlightBoxes from './spotlighBoxes';
+//import SpotlightBoxes from './spotlighBoxes';
 
 export default function Home( props ) {
   const [weatherData, setWeatherData] = useState([]); 
@@ -32,27 +33,39 @@ export default function Home( props ) {
       <View style={styles.spotlightView}>
         <Text style={styles.spotlightText}>{main.temp}º</Text>
         <View>
-          <Text style={styles.minText}>min: {main.temp_min}º - max: {main.temp_max}º</Text>
+          <Text style={styles.minText}>
+          <Icon name="temperature-high" 
+            size={15} color="#FFF" 
+            />
+             {main.temp_max}º
+            <Icon
+              name="temperature-low" 
+              size={15} color="#FFF" 
+            /> {main.temp_min}º    
+          </Text>
         </View>
       </View>
       
       <Text style={styles.text}>{weatherData.name} - {sys.country}</Text>
       <Text style={styles.infoText}>Real Temperature</Text>
       <View style={styles.boxes}>
+        
         <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
-          <SpotlightBoxes
-            name={'FL'} 
-          />
+          <View style={styles.spotlightBox}>
+            <Text><Icon name="thumbs-up" size={40} color="#1F2226" /></Text>
+          </View>
         </TouchableOpacity>
+       
         <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
-          <SpotlightBoxes
-            name={'Home'} 
-          />
+          <View style={styles.spotlightBox}>
+            <Text><Icon name="thermometer-full" size={40} color="#1F2226" /></Text>
+          </View>
         </TouchableOpacity>
+       
         <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
-          <SpotlightBoxes
-            name={'Wind'} 
-          />
+          <View style={styles.spotlightBox}>
+            <Text><Icon name="wind" size={40} color="#1F2226" /></Text>
+          </View>
         </TouchableOpacity>
         
       </View>
@@ -98,6 +111,16 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row'
   },
-  
+  spotlightBox: {
+    width: 100,
+    height: 150,
+    backgroundColor: '#F29F05',
+    fontSize: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#1F2226',
+    margin: 15,
+    borderRadius: 10
+  }
   
 });
