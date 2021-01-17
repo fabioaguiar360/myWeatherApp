@@ -23,10 +23,21 @@ export default function FeelsLike( props ) {
   return (
     <View style={styles.container}>
       <View style={styles.spotlightView}>
-        <Text style={styles.spotlightText}>{main.feels_like}º</Text>
-        <View>
-          <Text style={styles.minText}>min: {main.temp_min}º - max: {main.temp_max}º</Text>
-        </View>
+        <Text style={styles.spotlightText}>{main.temp}º</Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.minText}>
+            <Icon name="temperature-low" 
+              size={15} color="#FFF" 
+              /> min: 
+              {main.temp_min}º 
+            </Text>
+            <Text style={styles.minText}>
+              <Icon
+                name="temperature-high" 
+                size={15} color="#FFF" 
+              /> max: {main.temp_max}º    
+            </Text>
+          </View>
       </View>
       <Text style={styles.text}>{weatherData.name}</Text>
       <Text style={styles.infoText}>Feels like Temperature</Text>
@@ -69,7 +80,8 @@ const styles = StyleSheet.create({
   },
   minText: {
     fontSize: 15,
-    color: '#FFF'
+    color: '#FFF',
+    margin: 5
   },
   infoText: {
     color: '#FFF',

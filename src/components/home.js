@@ -4,16 +4,18 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native'
 import weatherApi from '../services/weatherApi';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-//import SpotlightBoxes from './spotlighBoxes';
+//study if I can use Fontisto too
 
 export default function Home( props ) {
   const [weatherData, setWeatherData] = useState([]); 
   const [main, setMain] = useState([]);
   const [sys, setSys] = useState([]);
+  /*
   const [spotlights, setSpotlights] = useState([
     {name: 'Home'},
     {name: 'FeelsLike'}
   ]);
+  */
  async function getData(){
    await weatherApi.get().then((data) => {
         setWeatherData(data.data);
@@ -32,16 +34,18 @@ export default function Home( props ) {
     <View style={styles.container}>
       <View style={styles.spotlightView}>
         <Text style={styles.spotlightText}>{main.temp}º</Text>
-        <View>
+        <View style={{flexDirection: 'row'}}>
           <Text style={styles.minText}>
-          <Icon name="temperature-high" 
+          <Icon name="temperature-low" 
             size={15} color="#FFF" 
-            />
-             {main.temp_max}º
+            /> min: 
+             {main.temp_min}º 
+          </Text>
+          <Text style={styles.minText}>
             <Icon
-              name="temperature-low" 
+              name="temperature-high" 
               size={15} color="#FFF" 
-            /> {main.temp_min}º    
+            /> max: {main.temp_max}º    
           </Text>
         </View>
       </View>
@@ -87,7 +91,8 @@ const styles = StyleSheet.create({
   },
   minText: {
     fontSize: 15,
-    color: '#FFF'
+    color: '#FFF',
+    margin: 5
   },
   infoText: {
     color: '#FFF',
