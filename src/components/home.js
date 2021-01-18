@@ -4,18 +4,13 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native'
 import weatherApi from '../services/weatherApi';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-//study if I can use Fontisto too
+//https://oblador.github.io/react-native-vector-icons/ - study if I can use Fontisto too
 
 export default function Home( props ) {
   const [weatherData, setWeatherData] = useState([]); 
   const [main, setMain] = useState([]);
   const [sys, setSys] = useState([]);
-  /*
-  const [spotlights, setSpotlights] = useState([
-    {name: 'Home'},
-    {name: 'FeelsLike'}
-  ]);
-  */
+ 
  async function getData(){
    await weatherApi.get().then((data) => {
         setWeatherData(data.data);
@@ -36,14 +31,14 @@ export default function Home( props ) {
         <Text style={styles.spotlightText}>{main.temp}º</Text>
         <View style={{flexDirection: 'row'}}>
           <Text style={styles.minText}>
-          <Icon name="temperature-low" 
+          <Icon name="level-down-alt" 
             size={15} color="#FFF" 
             /> min: 
              {main.temp_min}º 
           </Text>
           <Text style={styles.minText}>
             <Icon
-              name="temperature-high" 
+              name="level-up-alt" 
               size={15} color="#FFF" 
             /> max: {main.temp_max}º    
           </Text>
@@ -56,7 +51,7 @@ export default function Home( props ) {
         
         <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
           <View style={styles.spotlightBox}>
-            <Text><Icon name="thumbs-up" size={40} color="#1F2226" /></Text>
+            <Text><Icon name="tshirt" size={40} color="#1F2226" /></Text>
           </View>
         </TouchableOpacity>
        
@@ -66,7 +61,7 @@ export default function Home( props ) {
           </View>
         </TouchableOpacity>
        
-        <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Wind')}>
           <View style={styles.spotlightBox}>
             <Text><Icon name="wind" size={40} color="#1F2226" /></Text>
           </View>

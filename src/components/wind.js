@@ -4,15 +4,18 @@ import { StyleSheet, Text, View, TouchableOpacity, Systrace} from 'react-native'
 import weatherApi from '../services/weatherApi';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export default function FeelsLike( props ) {
+export default function Wind( props ) {
   const [weatherData, setWeatherData] = useState([]);
   const [main, setMain] = useState({}); 
+  const [wind, setWind] = useState([]);
   const [sys, setSys] = useState([]);
+
 
  async function getData(){
    await weatherApi.get().then((data) => {
         setWeatherData(data.data);
         setMain(data.data.main);
+        setWind(data.data.wind);
         setSys(data.data.sys);
     });
   }
@@ -25,7 +28,8 @@ export default function FeelsLike( props ) {
   return (
     <View style={styles.container}>
       <View style={styles.spotlightView}>
-        <Text style={styles.spotlightText}>{main.feels_like}º</Text>
+        <Text style={styles.spotlightText}>{wind.speed}</Text>
+        <Text style={styles.spotlightTextMin}>m/s</Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.minText}>
             <Icon name="level-down-alt" 
@@ -42,7 +46,7 @@ export default function FeelsLike( props ) {
           </View>
       </View>
       <Text style={styles.text}>{weatherData.name} - {sys.country}</Text>
-      <Text style={styles.infoText}>Feels like Temperature</Text>
+      <Text style={styles.infoText}>Wind Speed</Text>
       <View style={styles.boxes}>
         
         <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
@@ -100,6 +104,10 @@ const styles = StyleSheet.create({
   },
   spotlightText: {
     fontSize: 90,
+    color: '#F29F05'
+  },
+  spotlightTextMin: {
+    fontSize: 20,
     color: '#F29F05'
   },
   boxes: {
