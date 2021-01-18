@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Systrace} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import weatherApi from '../services/weatherApi';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -25,46 +25,65 @@ export default function FeelsLike( props ) {
   return (
     <View style={styles.container}>
       <View style={styles.spotlightView}>
-        <Text style={styles.spotlightText}>{main.feels_like}º</Text>
+        <Text style={styles.spotlightText}>{Math.round(main.feels_like)}º</Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.minText}>
             <Icon name="level-down-alt" 
               size={15} color="#FFF" 
               /> min: 
-              {main.temp_min}º 
+              {Math.round(main.temp_min)}º 
             </Text>
             <Text style={styles.minText}>
               <Icon
                 name="level-up-alt" 
                 size={15} color="#FFF" 
-              /> max: {main.temp_max}º    
+              /> max: {Math.round(main.temp_max)}º    
             </Text>
           </View>
       </View>
       <Text style={styles.text}>{weatherData.name} - {sys.country}</Text>
-      <Text style={styles.infoText}>Feels like Temperature</Text>
-      <View style={styles.boxes}>
-        
-        <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="tshirt" size={40} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
+      <Text style={styles.infoText}>Feels Like</Text>
+      <ScrollView horizontal={true} style={styles.boxes}>
        
         <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
           <View style={styles.spotlightBox}>
-            <Text><Icon name="thermometer-full" size={40} color="#1F2226" /></Text>
+            <Text><Icon name="thermometer-full" size={70} color="#1F2226" /></Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
+          <View style={styles.spotlightBox}>
+            <Text><Icon name="tshirt" size={70} color="#1F2226" /></Text>
           </View>
         </TouchableOpacity>
        
         <TouchableOpacity onPress={() => props.navigation.navigate('Wind')}>
           <View style={styles.spotlightBox}>
-            <Text><Icon name="wind" size={40} color="#1F2226" /></Text>
+            <Text><Icon name="wind" size={70} color="#1F2226" /></Text>
           </View>
         </TouchableOpacity>
         
-      </View>
-      <StatusBar style="dark" />
+        <TouchableOpacity onPress={() => props.navigation.navigate('Humidity')}>
+          <View style={styles.spotlightBox}>
+            <Text><Icon name="tint" size={70} color="#1F2226" /></Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => props.navigation.navigate('Visibility')}>
+          <View style={styles.spotlightBox}>
+            <Text><Icon name="eye" size={70} color="#1F2226" /></Text>
+          </View>
+        </TouchableOpacity>
+
+      </ScrollView>
+      <StatusBar
+          barStyle = "light-content"
+          hidden = {false}
+          backgroundColor = "#1F2226"
+          translucent = {true}
+          networkActivityIndicatorVisible = {true}
+          color = {'#FFF'}
+      />
     </View>
   );
 }
@@ -99,8 +118,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   spotlightText: {
-    fontSize: 90,
-    color: '#F29F05'
+    fontSize: 135,
+    color: '#F29F05',
   },
   boxes: {
     flex: 1,
@@ -108,8 +127,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   spotlightBox: {
-    width: 100,
-    height: 150,
+    width: 150,
+    height: 190,
     backgroundColor: '#F29F05',
     fontSize: 70,
     justifyContent: 'center',

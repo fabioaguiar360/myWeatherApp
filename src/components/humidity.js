@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView} from 'react-nativ
 import weatherApi from '../services/weatherApi';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export default function Wind( props ) {
+export default function Humidity( props ) {
   const [weatherData, setWeatherData] = useState([]);
   const [main, setMain] = useState({}); 
   const [wind, setWind] = useState([]);
@@ -28,8 +28,8 @@ export default function Wind( props ) {
   return (
     <View style={styles.container}>
       <View style={styles.spotlightView}>
-        <Text style={styles.spotlightText}>{wind.speed}</Text>
-        <Text style={styles.spotlightTextMin}>m/s</Text>
+        <Text style={styles.spotlightText}>{main.humidity}</Text>
+        <Text style={styles.spotlightTextMin}>%</Text>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.minText}>
             <Icon name="level-down-alt" 
@@ -46,9 +46,9 @@ export default function Wind( props ) {
           </View>
       </View>
       <Text style={styles.text}>{weatherData.name} - {sys.country}</Text>
-      <Text style={styles.infoText}>Wind Speed</Text>
+      <Text style={styles.infoText}>Humidity</Text>
       <ScrollView horizontal={true} style={styles.boxes}>
-
+       
         <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
           <View style={styles.spotlightBox}>
             <Text><Icon name="thermometer-full" size={70} color="#1F2226" /></Text>
