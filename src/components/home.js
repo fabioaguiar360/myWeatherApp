@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, StatusBar} from 'react-native';
 import weatherApi from '../services/weatherApi';
 
 import Spotlights from './spotlights';
@@ -58,8 +57,9 @@ export default function Home( {navigation} ) {
       
       <Text style={styles.text}>{weatherData.name} - {sys.country}</Text>
       <Text style={styles.infoText}>Real Temperature</Text>
-
-      <Spotlights navigation={navigation} />
+      <ScrollView horizontal={true} style={styles.boxes}>
+        <Spotlights navigation={navigation} />
+      </ScrollView>
       <StatusBar
           barStyle = "light-content"
           hidden = {false}

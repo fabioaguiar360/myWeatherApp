@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, StatusBar} from 'react-native';
 import weatherApi from '../services/weatherApi';
 import Spotlights from './spotlights';
 import Icon from 'react-native-vector-icons/FontAwesome5';
