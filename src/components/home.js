@@ -6,8 +6,6 @@ import weatherApi from '../services/weatherApi';
 import Spotlights from './spotlights';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-//https://oblador.github.io/react-native-vector-icons/ - study if I can use Fontisto too
-
 export default function Home( {navigation} ) {
   const [weatherData, setWeatherData] = useState([]); 
   const [main, setMain] = useState([]);
@@ -15,16 +13,8 @@ export default function Home( {navigation} ) {
 
   function timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp * 1000);
-    // var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    // var year = a.getFullYear();
-    // var month = months[a.getMonth()];
-    // var date = a.getDate();
     var hour = a.getHours();
     var min = a.getMinutes();
-    // var sec = a.getSeconds();
-    //var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-
-    // verfficar como pegar o timezone para diminuir de hour
     var time = hour + ':' + min ;
     return time;
   }
@@ -70,7 +60,6 @@ export default function Home( {navigation} ) {
       <Text style={styles.infoText}>Real Temperature</Text>
 
       <Spotlights navigation={navigation} />
-      
       <StatusBar
           barStyle = "light-content"
           hidden = {false}

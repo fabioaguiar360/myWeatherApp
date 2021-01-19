@@ -8,15 +8,14 @@ import Spotlights from './spotlights';
 export default function Humidity( {navigation} ) {
   const [weatherData, setWeatherData] = useState([]);
   const [main, setMain] = useState({}); 
-  const [wind, setWind] = useState([]);
   const [sys, setSys] = useState([]);
 
 
  async function getData(){
    await weatherApi.get().then((data) => {
         setWeatherData(data.data);
+        
         setMain(data.data.main);
-        setWind(data.data.wind);
         setSys(data.data.sys);
     });
   }
