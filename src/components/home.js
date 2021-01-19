@@ -2,11 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity} from 'react-native';
 import weatherApi from '../services/weatherApi';
+
+import Spotlights from './spotlights';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 //https://oblador.github.io/react-native-vector-icons/ - study if I can use Fontisto too
 
-export default function Home( props ) {
+export default function Home( {navigation} ) {
   const [weatherData, setWeatherData] = useState([]); 
   const [main, setMain] = useState([]);
   const [sys, setSys] = useState([]);
@@ -23,7 +25,7 @@ export default function Home( props ) {
     //var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
 
     // verfficar como pegar o timezone para diminuir de hour
-    var time = hour -3 + ':' + min ;
+    var time = hour + ':' + min ;
     return time;
   }
  
@@ -66,39 +68,9 @@ export default function Home( props ) {
       
       <Text style={styles.text}>{weatherData.name} - {sys.country}</Text>
       <Text style={styles.infoText}>Real Temperature</Text>
-      <ScrollView horizontal={true} style={styles.boxes}>
-       
-        <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="thermometer-full" size={70} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="tshirt" size={70} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
-       
-        <TouchableOpacity onPress={() => props.navigation.navigate('Wind')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="wind" size={70} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => props.navigation.navigate('Humidity')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="tint" size={70} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => props.navigation.navigate('Visibility')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="eye" size={70} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
-        
-      </ScrollView>
+      <Spotlights navigation={navigation} />
+      
       <StatusBar
           barStyle = "light-content"
           hidden = {false}

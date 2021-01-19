@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import weatherApi from '../services/weatherApi';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Spotlights from './spotlights';
 
-export default function Humidity( props ) {
+export default function Humidity( {navigation} ) {
   const [weatherData, setWeatherData] = useState([]);
   const [main, setMain] = useState({}); 
   const [wind, setWind] = useState([]);
@@ -48,37 +49,7 @@ export default function Humidity( props ) {
       <Text style={styles.text}>{weatherData.name} - {sys.country}</Text>
       <Text style={styles.infoText}>Humidity</Text>
       <ScrollView horizontal={true} style={styles.boxes}>
-       
-        <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="thermometer-full" size={70} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => props.navigation.navigate('FeelsLike')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="tshirt" size={70} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
-       
-        <TouchableOpacity onPress={() => props.navigation.navigate('Wind')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="wind" size={70} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => props.navigation.navigate('Humidity')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="tint" size={70} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => props.navigation.navigate('Visibility')}>
-          <View style={styles.spotlightBox}>
-            <Text><Icon name="eye" size={70} color="#1F2226" /></Text>
-          </View>
-        </TouchableOpacity>
-        
+      <Spotlights navigation={navigation} />
       </ScrollView>
       <StatusBar
           barStyle = "light-content"
