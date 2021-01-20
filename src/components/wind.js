@@ -3,12 +3,21 @@ import { StyleSheet, Text, View, ScrollView, StatusBar} from 'react-native';
 import weatherApi from '../services/weatherApi';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Spotlights from './spotlights';
+import WeatherMainIcon from './weatherMainIcon';
 
 export default function Wind( {navigation} ) {
   const [weatherData, setWeatherData] = useState([]);
   const [main, setMain] = useState({}); 
   const [wind, setWind] = useState([]);
   const [sys, setSys] = useState([]);
+
+  function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var time = hour + ':' + min ;
+    return time;
+  }
 
 
  async function getData(){
@@ -44,9 +53,13 @@ export default function Wind( {navigation} ) {
               /> max: {Math.round(main.temp_max)}º    
             </Text>
           </View>
+          <View>
+            <Text style={styles.minText}>Sunrise: {timeConverter(sys.sunrise)} - Sunset: {timeConverter(sys.sunset)}</Text>
+            <WeatherMainIcon />
+          </View>
+          <Text style={styles.text}>{weatherData.name} - {sys.country}</Text>
+          <Text style={styles.infoText}>Wind Speed</Text>
       </View>
-      <Text style={styles.text}>{weatherData.name} - {sys.country}</Text>
-      <Text style={styles.infoText}>Wind Speed</Text>
       <ScrollView horizontal={true} style={styles.boxes}>
 
       <Spotlights navigation={navigation} />
@@ -69,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1F2226',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   text: {
     fontSize: 30,
@@ -87,24 +100,23 @@ const styles = StyleSheet.create({
   },
   spotlightView: {
     alignItems: 'center',
-    marginTop: 20,
-    width: 350,
-    height: 350,
+    height: '60%',
     padding: 20,
     justifyContent: 'center',
+    position: 'absolute',
+    top: 50
   },
   spotlightText: {
-    fontSize: 135,
-    color: '#F29F05'
-  },
-  spotlightTextMin: {
-    fontSize: 20,
-    color: '#F29F05'
+    fontSize: 160,
+    color: '#F29F05',
   },
   boxes: {
     flex: 1,
     width: '100%',
-    flexDirection: 'row'
+    height: '30%',
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0
   },
   spotlightBox: {
     width: 150,
@@ -117,4 +129,5 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 10
   }
+  
 });
