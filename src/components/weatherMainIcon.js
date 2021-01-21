@@ -16,8 +16,6 @@ export default function WeatherMainIcon() {
 
   useEffect(() => {
     getData();
-    console.log(weatherIcon.main);
-    
   },[]);
 
   
