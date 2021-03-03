@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, StatusBar} from 'react-native';
-import weatherApi from '../services/weatherApi';
+import React, { useContext } from 'react';
+import { Text, View, ScrollView, StatusBar} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { ApiContext } from '../context/apiContext';
 import Spotlights from './spotlights';
 import { styles } from './styles';
 import WeatherMainIcon from './weatherMainIcon';
 
 export default function Wind( {navigation} ) {
-  const [weatherData, setWeatherData] = useState([]);
-  const [main, setMain] = useState({}); 
-  const [wind, setWind] = useState([]);
-  const [sys, setSys] = useState([]);
-
+  // const [weatherData, setWeatherData] = useState([]);
+  // const [main, setMain] = useState({}); 
+  // const [wind, setWind] = useState([]);
+  // const [sys, setSys] = useState([]);
+  const { main, sys, wind, weatherData, theme} = useContext(ApiContext);
   function timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp * 1000);
     var hour = a.getHours();
@@ -20,21 +20,6 @@ export default function Wind( {navigation} ) {
     return time;
   }
 
-
- async function getData(){
-   await weatherApi.get().then((data) => {
-        setWeatherData(data.data);
-        setMain(data.data.main);
-        setWind(data.data.wind);
-        setSys(data.data.sys);
-    });
-  }
-
-  useEffect(() => {
-    getData();
-  },[]);
-
-  
   return (
     <View style={styles.container}>
       <View style={styles.spotlightView}>

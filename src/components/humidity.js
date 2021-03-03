@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, StatusBar} from 'react-native';
-import weatherApi from '../services/weatherApi';
+import { useContext } from 'react';
+import { Text, View, ScrollView, StatusBar} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { ApiContext } from '../context/apiContext';
 import Spotlights from './spotlights';
 import { styles } from './styles';
 import WeatherMainIcon from './weatherMainIcon';
 
 export default function Humidity( {navigation} ) {
-  const [weatherData, setWeatherData] = useState([]);
-  const [main, setMain] = useState({}); 
-  const [sys, setSys] = useState([]);
+  const { main, sys, weatherData, theme } = useContext(ApiContext);
 
   function timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp * 1000);
@@ -19,20 +18,6 @@ export default function Humidity( {navigation} ) {
     return time;
   }
 
- async function getData(){
-   await weatherApi.get().then((data) => {
-        setWeatherData(data.data);
-        
-        setMain(data.data.main);
-        setSys(data.data.sys);
-    });
-  }
-
-  useEffect(() => {
-    getData();
-  },[]);
-
-  
   return (
     <View style={styles.container}>
       <View style={styles.spotlightView}>

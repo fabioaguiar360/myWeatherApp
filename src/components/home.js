@@ -1,17 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, StatusBar} from 'react-native';
-import weatherApi from '../services/weatherApi';
+import React, { useContext } from 'react';
+import { Text, View, ScrollView, StatusBar, TouchableOpacity } from 'react-native';
 import WeatherMainIicon from './weatherMainIcon';
 
 import Spotlights from './spotlights';
 import { styles } from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { ApiContext } from '../context/apiContext';
 
 export default function Home( {navigation} ) {
-  const [weatherData, setWeatherData] = useState([]); 
-  const [main, setMain] = useState([]);
-  const [sys, setSys] = useState([]);
-
+ 
+  // deconstruo o contexto que vem do ApiContext
+  // se não desconstruisse, poderia criar um context = useContext(ApiContext) e usar algo do tipo
+  // context.main.temp por exemplo
+  const { main, sys, theme, weatherData, setTheme }  = useContext(ApiContext);
+  
+  
+  const toggleTheme =  async() => {
+    theme == 'dark' ? setTheme('light') : setTheme('dark'); 
+  }
+ 
   function timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp * 1000);
     var hour = a.getHours();
@@ -20,32 +27,27 @@ export default function Home( {navigation} ) {
     return time;
   }
 
- async function getData(){
-   await weatherApi.get().then((data) => {
-        setWeatherData(data.data);
-        setMain(data.data.main);
-        setSys(data.data.sys);
-    });
-  }
-
-  useEffect(() => {
-    getData();
-
-  },[]);
-
-  
   return (
-    <View style={styles.container}>
+    
+      
+    <View style={theme == 'dark' ? styles.container : styles.containerLight}>
+      <TouchableOpacity
+        style={theme == 'dark' ? styles.toggleThemeBtn : styles.toggleThemeBtnLight }
+        onPress={() => toggleTheme()}>
+          <Text style={theme == 'dark' ? styles.toggleThemeText : styles.toggleThemeTextLight}>
+            {theme == 'dark' ? <Icon name="toggle-off" size={25} color="#FFF" /> : <Icon name="toggle-on" size={25} color="#1F2226" />}
+            </Text>
+      </TouchableOpacity>
       <View style={styles.spotlightView}>
-        <Text style={styles.spotlightText}>{Math.round(main.temp)}º</Text>
+        <Text style={theme == 'dark' ? styles.spotlightText : styles.spotlightTextLight }>{Math.round(main.temp)}º</Text>
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.minText}>
+          <Text style={theme == 'dark' ? styles.minText : styles.minTextLight}>
           <Icon name="level-down-alt" 
             size={15} color="#FFF" 
             /> min: 
-             {Math.round(main.temp_min)}º 
+            {Math.round(main.temp_min)}º 
           </Text>
-          <Text style={styles.minText}>
+          <Text style={theme == 'dark' ? styles.minText : styles.minTextLight}>
             <Icon
               name="level-up-alt" 
               size={15} color="#FFF" 
@@ -54,13 +56,14 @@ export default function Home( {navigation} ) {
           
         </View>
         <View>
-          <Text style={styles.minText}>Sunrise: {timeConverter(sys.sunrise)} - Sunset: {timeConverter(sys.sunset)}</Text>
+          <Text style={theme == 'dark' ? styles.minText: styles.minTextLight }>
+            Sunrise: {timeConverter(sys.sunrise)} - Sunset: {timeConverter(sys.sunset)}
+          </Text>
           <WeatherMainIicon />
         </View>
-        <Text style={styles.text}>{weatherData.name} - {sys.country}</Text>
-      <Text style={styles.infoText}>Real Temperature</Text>
+        <Text style={theme == 'dark' ? styles.text : styles.textLight}>{weatherData.name} - {sys.country}</Text>
+      <Text style={theme == 'dark' ? styles.infoText: styles.infoTextLight }>Real Temperature</Text>
       </View>
-      
       
       <ScrollView horizontal={true} style={styles.boxes}>
         <Spotlights navigation={navigation} />
@@ -73,7 +76,9 @@ export default function Home( {navigation} ) {
           networkActivityIndicatorVisible = {true}
           color = {'#FFF'}
       />
+      
     </View>
+    
   );
 }
 
